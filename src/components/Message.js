@@ -7,7 +7,7 @@ const Message = (props) => {
     const messageBody = <div className="message-body" data-body-id={props.message.id}>{props.message.body}</div>;        
 
     return(
-        <div>
+        <section className="info-section">
             <div className={`info ${props.message.read ? "read" : ""} ${props.message.selected ? "checked" : ""}`}>
                 <div className="checkbox-wrapper">
                     <input 
@@ -41,7 +41,7 @@ const Message = (props) => {
                 </div>
             </div>
             {messageBody}
-        </div>
+        </section>
     )
 }
 

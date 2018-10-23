@@ -25,6 +25,8 @@ class App extends Component {
       messages: data,
       totalUnread: unReadData.length
     })
+    const info = document.querySelector('.info');
+    console.log(info.clientHeight)
   }
 
   patch = async (id, command, attribute, value) => {
@@ -48,7 +50,6 @@ class App extends Component {
       messages: posted,
       totalUnread: unReadData.length
     })
-    //console.log('this.state.totalUnread', this.state.totalUnread);
   }
 
   selectedAllOrDeselectedAll = (e) => {
@@ -74,54 +75,13 @@ class App extends Component {
   }
 
   onClickChecked = (id) => {
-    console.log('id', id);
     let newId = id.toString();
     this.patch([newId], 'select', 'selected');
-    // const id = e.target.getAttribute('data-index');
-    // const data = this.state.messages;
-    // let replacement;
-    
-    // data.map(function(msg) {
-    //   const i = msg.id.toString();
-    //     if(i === id) {
-    //       if(msg.selected === true) {
-    //         replacement = Object.assign({}, msg, {selected: false});
-    //       } else if (msg.selected === false ) {
-    //         replacement = Object.assign({}, msg, {selected: true});
-    //       }
-    //     }
-    // });
-
-    // const newMsgs = [...data.slice(0,id-1), replacement, ...data.slice(id)];
-    
-    // this.setState({
-    //   messages: newMsgs
-    // })
   }
 
   onCheckedStar = (id) => {
     let newId = id.toString();
     this.patch([newId], 'star', 'starred');
-    // const id = e.target.getAttribute('data-index');
-    // const data = this.state.messages;
-    // let replacement;
-    
-    // data.map(function(msg) {
-    //   const i = msg.id.toString();
-    //     if(i === id) {
-    //       if(msg.starred === true) {
-    //         replacement = Object.assign({}, msg, {starred: false});
-    //       } else if (msg.starred === false) {
-    //         replacement = Object.assign({}, msg, {starred: true});
-    //       }
-    //     }
-    // });
-
-    // const newMsgs = [...data.slice(0,id-1), replacement, ...data.slice(id)];
-
-    // this.setState({
-    //     messages: newMsgs
-    // })
   }
 
   onMarkAsRead = (e) => {
@@ -129,31 +89,6 @@ class App extends Component {
     const filteredMsgs = this.state.messages.filter(message => message.selected === true);
     const ids = filteredMsgs.map(msg => msg.id);
     this.patch([...ids], 'read', 'read', true);
-
-
-    // console.dir(e.target);
-    // const newArr = [];
-    // arrayOfObjs.map((arrayOfObj) => {
-    //   if(arrayOfObj.selected === true) {
-    //     const newObj = {
-    //       subject: arrayOfObj.subject,
-    //       read: true,
-    //       starred: arrayOfObj.starred,
-    //       selected: arrayOfObj.selected,
-    //       labels: arrayOfObj.labels,
-    //       body: arrayOfObj.body,
-    //       id: arrayOfObj.id
-    //     }
-    //     newArr.push(newObj)
-    //   } else {
-    //     newArr.push(arrayOfObj)
-    //   }
-    //   console.log(newArr);
-    // })
-    // const unReadData = filteredMsg.filter(filteredMsgObj => filteredMsgObj.read === true);
-    // this.setState({
-    //     totalUnread: unReadData
-    // })
   }
 
   onMarkAsUnread = (e) => {
@@ -161,29 +96,6 @@ class App extends Component {
     const filteredMsgs = this.state.messages.filter(message => message.selected === true);
     const ids = filteredMsgs.map(msg => msg.id);
     this.patch([...ids], 'read', 'read', false);
-    // console.dir(e.target);
-    // const newArr = [];
-    // arrayOfObjs.map((arrayOfObj) => {
-    //   if(arrayOfObj.selected === true) {
-    //     const newObj = {
-    //       subject: arrayOfObj.subject,
-    //       read: false,
-    //       starred: arrayOfObj.starred,
-    //       selected: arrayOfObj.selected,
-    //       labels: arrayOfObj.labels,
-    //       body: arrayOfObj.body,
-    //       id: arrayOfObj.id
-    //     }
-    //     newArr.push(newObj)
-    //   } else {
-    //     newArr.push(arrayOfObj)
-    //   }
-    //   console.log(newArr);
-    // })
-    // const unReadData = filteredMsg.filter(filteredMsgObj => filteredMsgObj.read === false);
-    // this.setState({
-    //     totalUnread: unReadData
-    // })
   }
 
   onClickApplyLabelHeader = () => {
@@ -223,17 +135,22 @@ class App extends Component {
   }
 
   onClickShowBody = (e) => {
-    const allMsgBody = document.querySelectorAll('.message-body');
-    for(let i = 0; i<allMsgBody.length; i++) {
-      allMsgBody[i].classList.remove('active')
-    }
+    e.preventDefault();
     const messageBody = e.target.parentElement.parentElement.childNodes[1];
-    messageBody.classList.add('active');
+    if(messageBody.classList.contains('active')) {
+      messageBody.classList.remove('active');
+    } else {
+      const allMsgBody = document.body.querySelectorAll('.message-body');
+      for(let i = 0; i<allMsgBody.length; i++) {
+        allMsgBody[i].classList.remove('active');
+      }
+      messageBody.classList.add('active');
+    }
   }
 
   render() {
     return (
-      <div className="custom-container">
+      <section className="custom-container">
         <Toolbar
           messages={this.state.messages}
           totalUnread={this.state.totalUnread} 
@@ -256,7 +173,7 @@ class App extends Component {
           onCheckedStar={this.onCheckedStar}
           onClickShowBody={this.onClickShowBody}
           />
-      </div>
+      </section>
     );
   }
 }
