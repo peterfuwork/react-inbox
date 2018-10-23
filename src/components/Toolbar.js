@@ -5,7 +5,11 @@ const Toolbar = (props) => {
     return(
         <section className="toolbar-section">
             <div className="toolbar">
-                <a href="#" className="btn plus"><FontAwesomeIcon icon={['fas', 'plus']} /></a>
+                <a href="#" 
+                    className="btn plus"
+                    onClick={() => props.onComposeEmail()}>
+                    <FontAwesomeIcon icon={['fas', 'plus']} />
+                </a>
                 <a href="#" 
                     className="btn"
                     onClick={(e) => props.selectedAllOrDeselectedAll(e)}>
@@ -75,7 +79,9 @@ const Toolbar = (props) => {
                         </li>
                     </ul>
                 </div>
-                <a href="#" className="btn"><FontAwesomeIcon icon={['far', 'trash-alt']} /></a>
+                <a href="#" 
+                    className="btn"
+                    onClick={(e) => props.onClickDelete(e)}><FontAwesomeIcon icon={['far', 'trash-alt']} /></a>
                 <div className="box">
                     <span className="unread-message">
                         <span className="value">{props.totalUnread}</span>&nbsp;
@@ -83,8 +89,25 @@ const Toolbar = (props) => {
                     </span>
                 </div>
             </div>
-            <div className="compose-message">
+            <div className={`compose-message ${props.openComposePanel === true ? "active" : ""}`}>
                 <h3>Compose Message</h3>
+                <form className="form">
+                    <div className="title">Subject:</div>&nbsp;&nbsp;
+                    <input 
+                        type="text" 
+                        className="subject-input"
+                        onChange={(e) => props.onChangeTypeSubject(e.target.value)} /><br/>
+                    <div className="title">Body:</div>&nbsp;&nbsp;
+                    <textarea 
+                        type="text" 
+                        className="body-textarea"
+                        onChange={(e) => props.onChangeTypeBody(e.target.value)} /><br/>
+                    <div className="btn-wrapper">
+                        <button 
+                            className="btn"
+                            onClick={(e) => props.onSubmitNewEmail(e)}>Submit</button>
+                    </div><br/>
+                </form>
             </div>
         </section>
     )

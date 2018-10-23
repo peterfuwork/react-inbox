@@ -12,7 +12,10 @@ class App extends Component {
       selectedAll: false,
       unSelectedAll: true,
       applyLabelClicked : false,
-      removeLabelClicked : false
+      removeLabelClicked : false,
+      openComposePanel: false,
+      newSubject: "",
+      newBody: ""
     }
   }
 
@@ -20,13 +23,35 @@ class App extends Component {
     let result = await fetch("http://localhost:8082/api/messages");
     let data = await result.json();
     const unReadData = data.filter(dat => dat.read === false);
-    console.log(data);
     this.setState({
       messages: data,
       totalUnread: unReadData.length
     })
-    const info = document.querySelector('.info');
-    console.log(info.clientHeight)
+  }
+
+  post = async (subject, body) => {
+    const newMessage = {
+      subject: subject,
+      read: false,
+      selected: false,
+      starred: false,
+      labels: [],
+      body: body,
+      id: (this.state.messages.length)
+    }
+    await fetch('http://localhost:8082/api/messages', {
+      method: 'POST',
+      body: JSON.stringify(newMessage),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    }).then(response => response.json())
+      .then((response) => {
+        this.setState({
+          messages: [...this.state.messages, response]
+        })
+    })
   }
 
   patch = async (id, command, attribute, value) => {
@@ -148,6 +173,47 @@ class App extends Component {
     }
   }
 
+  onComposeEmail = () => {
+    if(this.state.openComposePanel === false) {
+      this.setState({
+        openComposePanel: true
+      })
+    } else if(this.state.openComposePanel === true) {
+      this.setState({
+        openComposePanel: false
+      })
+    }
+  }
+
+  onChangeTypeSubject = (subject) => {
+    this.setState({
+      newSubject: subject
+    });
+  }
+
+  onChangeTypeBody = (body) => {
+    this.setState({
+      newBody: body
+    });
+  }
+
+  onSubmitNewEmail = (e) => {
+    e.preventDefault();
+    const newSubject = this.state.newSubject;
+    const newBody = this.state.newBody;  
+    if (newSubject !== "" && newBody !== "") {
+      this.post(newSubject, newBody);
+    }
+    console.log(this.state.newSubject, this.state.newBody)
+  }
+
+  onClickDelete = (e) => {
+    e.preventDefault();
+    const filteredMsgs = this.state.messages.filter(message => message.selected === true);
+    const ids = filteredMsgs.map(msg => msg.id);
+    this.patch([...ids], 'delete', 'delete');
+  }
+
   render() {
     return (
       <section className="custom-container">
@@ -165,6 +231,12 @@ class App extends Component {
           onClickRemoveLabelHeader={this.onClickRemoveLabelHeader}
           onClickApplyLabel={this.onClickApplyLabel}
           onClickRemoveLabel={this.onClickRemoveLabel}
+          onComposeEmail={this.onComposeEmail}
+          onSubmitNewEmail={this.onSubmitNewEmail}
+          openComposePanel={this.state.openComposePanel}
+          onChangeTypeSubject={this.onChangeTypeSubject}
+          onChangeTypeBody={this.onChangeTypeBody}
+          onClickDelete={this.onClickDelete}
           />
         <Messages 
           onMarkAsRead={this.onMarkAsRead}
