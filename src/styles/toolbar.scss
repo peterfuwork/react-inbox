@@ -1,0 +1,97 @@
+.toolbar {
+    text-align: left;
+    padding: 1rem;
+    display: table;
+    background-color: #ccc;
+    width: 100%;
+    position:relative;
+    .btn {
+        padding: .5rem;
+        text-decoration: none;
+        border: 1px solid #000;
+        margin: 0 .5rem;
+        color: #000;
+        font-size: .9rem;
+        display: inline-block;
+        cursor:pointer;
+        &.plus {
+            background-color:darkred;
+            color:#fff;
+            border:none;
+        }
+        &.plus:hover {
+            color:darkred;
+            background-color:#fff;
+            border:none;
+        }
+        &:hover {
+            color: #fff;
+            background-color:#000;
+        }
+    }
+    .btn-select {
+        display: inline-block;
+        .btn {
+            padding: .5rem;
+            text-decoration: none;
+            border: 1px solid #000;
+            margin: 0 .5rem;
+            color: #000;
+            font-size: .9rem;
+            display: inline-block;
+            cursor:pointer;
+            &:hover {
+                color: #fff;
+                background-color:#000;
+            }
+        }
+        .btn-select-ul {
+            list-style-type: none;
+            position: absolute;
+            padding: 0;
+            margin: 0 .5rem;
+            z-index: 1;
+            opacity: 0;
+            transition:.5s;
+            &.active {
+                opacity:1;
+            }
+            .btn-select-li {
+                border-left: 1px solid #000;
+                border-right: 1px solid #000;
+                border-bottom: 1px solid #000;
+                background-color:rgba(255,255,255, .8);
+                .link{
+                    text-decoration: none;
+                    color: #000;
+                    display: block;
+                    padding: .5rem;
+                    cursor:pointer;
+                    &:hover{
+                        color: #fff;
+                        background-color:#000;
+                    }
+                }
+            }
+        }
+    }
+    .box {
+        display: inline-block;
+        position: absolute;
+        right: 4%;
+        top: 35%;
+        .unread-message {
+            .value {
+                position: absolute;
+                right: 0;
+                top: -17px;
+                background-color: red;
+                border-radius: 50%;
+                color: #fff;
+                text-align: center;
+                padding: .3rem;
+            }
+        }
+        
+    }
+}

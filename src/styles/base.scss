@@ -1,0 +1,21 @@
+$primary-color: pink;
+
+img { max-width: 100%;}
+.text-center {text-align:center}
+
+/* Solve grid float issue */
+//   @media(max-width:767px){
+//     &:nth-child(2n+1){
+//       clear:left;
+//     }
+//   }
+//   @media(min-width:768px){
+//     &:nth-child(3n+1){
+//       clear:left;
+//     }
+//   }
+// @media(min-width:992px){
+//     &:nth-child(4n+1){
+//       clear:left;
+//     }
+//   }

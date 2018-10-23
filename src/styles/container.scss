@@ -1,0 +1,78 @@
+.custom-container {
+    background-color: #fff;
+    .messages {
+        .info {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            font-weight:700;
+            background-color:#ddd;
+            cursor:pointer;
+            position:relative;
+            &.checked {
+                background-color:lightyellow !important;
+            }
+            &.read {
+                background-color:#eee;
+                font-weight:300;
+            }
+            &:hover {
+                border-left: 5px solid #999;
+            }
+            .checkbox-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 5%;
+                .checkbox {
+                    cursor:pointer;
+                }
+            }
+            .star {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor:pointer;
+                padding: 1rem;
+            }
+            .labels{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                .label{
+                    font-size: .7rem;
+                    font-weight: 400;
+                    border: 1px solid #000;
+                    padding: .1rem .4rem;
+                    margin: .2rem;
+                }
+            }
+            .message {
+                padding: 1rem .3rem;
+                cursor: pointer;
+                text-align: left;
+            }
+            .show-body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: .5rem;
+                border: 1px solid #000;
+                margin: .5rem;
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+    .message-body {
+        height: 0;
+        display: flex;
+        align-items: center;
+        padding-left: .9rem;
+        overflow: hidden;
+        transition:.7s;
+        &.active{
+            height: 51px;
+        }
+    }
+}
