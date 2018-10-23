@@ -96,12 +96,14 @@ const Toolbar = (props) => {
                     <input 
                         type="text" 
                         className="subject-input"
-                        onChange={(e) => props.onChangeTypeSubject(e.target.value)} /><br/>
+                        onChange={(e) => props.onChangeTypeSubject(e)}
+                        value={props.newSubject} /><br/>
                     <div className="title">Body:</div>&nbsp;&nbsp;
                     <textarea 
                         type="text" 
                         className="body-textarea"
-                        onChange={(e) => props.onChangeTypeBody(e.target.value)} /><br/>
+                        onChange={(e) => props.onChangeTypeBody(e)}
+                        value={props.newBody} /><br/>
                     <div className="btn-wrapper">
                         <button 
                             className="btn"

@@ -185,15 +185,15 @@ class App extends Component {
     }
   }
 
-  onChangeTypeSubject = (subject) => {
+  onChangeTypeSubject = (e) => {
     this.setState({
-      newSubject: subject
+      newSubject: e.target.value
     });
   }
 
-  onChangeTypeBody = (body) => {
+  onChangeTypeBody = (e) => {
     this.setState({
-      newBody: body
+      newBody: e.target.value
     });
   }
 
@@ -203,6 +203,14 @@ class App extends Component {
     const newBody = this.state.newBody;  
     if (newSubject !== "" && newBody !== "") {
       this.post(newSubject, newBody);
+      this.setState({
+        newSubject: "",
+        newBody: "",
+        openComposePanel: false
+      })
+    } else {
+      const error = new Error('One of the input fields is empty!');
+      console.log(error);
     }
     console.log(this.state.newSubject, this.state.newBody)
   }
@@ -237,6 +245,8 @@ class App extends Component {
           onChangeTypeSubject={this.onChangeTypeSubject}
           onChangeTypeBody={this.onChangeTypeBody}
           onClickDelete={this.onClickDelete}
+          newSubject={this.state.newSubject}
+          newBody={this.state.newBody}
           />
         <Messages 
           onMarkAsRead={this.onMarkAsRead}

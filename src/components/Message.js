@@ -19,7 +19,7 @@ const Message = (props) => {
                 <div className="star" 
                     data-index={props.message.id}
                     onClick={() => props.onCheckedStar(props.message.id)}>
-                    {props.message.starred === true ? <FontAwesomeIcon icon={['far', 'star']} /> : <FontAwesomeIcon icon={['fas', 'star']} />}
+                    {props.message.starred === true ? <FontAwesomeIcon icon={['fas', 'star']} /> : <FontAwesomeIcon icon={['far', 'star']} />}
                 </div>
                 <div className="labels">
                     {props.message.labels.map((label, i) => {
